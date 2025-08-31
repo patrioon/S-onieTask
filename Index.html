@@ -3,30 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wior-Płyt - Meble na wymiar i płyty meblowe</title>
+  <title>Wior-Płyt - Kuchnie marzeń</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
   <style>
-    body { font-family: 'Segoe UI', sans-serif; }
-    .hero { background: linear-gradient(135deg, #1a1a1a, #444); color: white; text-align: center; padding: 100px 20px; }
-    .hero h1 { font-size: 2.5rem; font-weight: bold; }
-    .hero p { font-size: 1.2rem; margin-bottom: 20px; }
-    .btn-main { background: #e63946; color: white; font-weight: bold; }
+    body { font-family: 'Segoe UI', sans-serif; transition: background 0.3s, color 0.3s; }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+      color: white; text-align: center; padding: 150px 20px; position: relative;
+    }
+    .hero::after {
+      content: ""; position: absolute; inset: 0; background: rgba(0,0,0,0.5);
+    }
+    .hero > div { position: relative; z-index: 1; }
+    .btn-main { background: #e63946; color: white; font-weight: bold; border-radius: 30px; padding: 12px 25px; }
     .btn-main:hover { background: #c62828; }
     .product-card { transition: transform 0.3s; }
-    .product-card:hover { transform: scale(1.05); }
+    .product-card:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
     .cta { background: #e63946; color: white; text-align: center; padding: 60px 20px; }
     footer { background: #222; color: white; text-align: center; padding: 20px; }
+    .dark-mode { background: #111; color: #eee; }
+    .dark-mode footer { background: #000; }
     /* Chat */
-    .chatbox { position: fixed; bottom: 20px; right: 20px; background: white; border: 1px solid #ccc; border-radius: 10px; width: 300px; height: 400px; display: none; flex-direction: column; z-index: 9999; }
+    .chatbox { position: fixed; bottom: 80px; right: 20px; background: white; border: 1px solid #ccc; border-radius: 10px; width: 300px; height: 400px; display: none; flex-direction: column; z-index: 9999; }
     .chatbox-header { background: #e63946; color: white; padding: 10px; text-align: center; font-weight: bold; }
     .chatbox-messages { flex: 1; padding: 10px; overflow-y: auto; font-size: 0.9rem; }
     .chatbox-input { display: flex; }
     .chatbox-input input { flex: 1; padding: 10px; border: none; border-top: 1px solid #ccc; }
     .chatbox-input button { background: #e63946; color: white; border: none; padding: 10px; cursor: pointer; }
     .chat-toggle { position: fixed; bottom: 20px; right: 20px; background: #e63946; color: white; border: none; padding: 15px; border-radius: 50%; cursor: pointer; z-index: 9999; }
+    .partner-logo { filter: grayscale(100%); transition: filter 0.3s; }
+    .partner-logo:hover { filter: grayscale(0); }
   </style>
 </head>
 <body>
+
+<!-- Dark Mode Switch -->
+<div class="position-fixed top-0 end-0 m-3">
+  <button class="btn btn-sm btn-outline-light" onclick="toggleDark()">🌙/☀️</button>
+</div>
 
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
@@ -39,7 +54,9 @@
       <ul class="navbar-nav ms-auto">
         <li class="nav-item"><a class="nav-link" href="#oferta">Oferta</a></li>
         <li class="nav-item"><a class="nav-link" href="#sklep">Sklep</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projekty">Projekty</a></li>
         <li class="nav-item"><a class="nav-link" href="#opinie">Opinie</a></li>
+        <li class="nav-item"><a class="nav-link" href="#faq">FAQ</a></li>
         <li class="nav-item"><a class="nav-link" href="#kontakt">Kontakt</a></li>
       </ul>
     </div>
@@ -47,20 +64,22 @@
 </nav>
 
 <!-- Hero -->
-<header class="hero">
-  <h1>Twoja kuchnia marzeń z Wior-Płyt</h1>
-  <p>Meble na wymiar • Płyty meblowe • Akcesoria • Docinki CNC</p>
-  <a href="#kontakt" class="btn btn-main btn-lg">Zaprojektuj swoją kuchnię</a>
+<header class="hero d-flex align-items-center">
+  <div>
+    <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">Twoja kuchnia marzeń z Wior-Płyt</h1>
+    <p id="typed-text" class="lead"></p>
+    <a href="#kontakt" class="btn btn-main btn-lg mt-3 animate__animated animate__bounceIn">Zaprojektuj swoją kuchnię</a>
+  </div>
 </header>
 
 <!-- Oferta -->
 <section id="oferta" class="container py-5">
-  <h2 class="text-center mb-4">Nasza oferta</h2>
-  <div class="row g-4">
-    <div class="col-md-3"><div class="card p-3 text-center"><h5>Meble na wymiar</h5><p>Indywidualne projekty i jakość premium.</p></div></div>
-    <div class="col-md-3"><div class="card p-3 text-center"><h5>Płyty meblowe</h5><p>Szeroki wybór w atrakcyjnych cenach.</p></div></div>
-    <div class="col-md-3"><div class="card p-3 text-center"><h5>Akcesoria</h5><p>Okucia, uchwyty, zawiasy i więcej.</p></div></div>
-    <div class="col-md-3"><div class="card p-3 text-center"><h5>Docinki CNC</h5><p>Precyzyjne cięcie elementów.</p></div></div>
+  <h2 class="text-center mb-4">Dlaczego my?</h2>
+  <div class="row g-4 text-center">
+    <div class="col-md-3"><div class="card p-3 animate__animated animate__fadeInUp"><h5>Precyzja CNC</h5><p>Dokładność do 0,1 mm</p></div></div>
+    <div class="col-md-3"><div class="card p-3 animate__animated animate__fadeInUp"><h5>Indywidualne projekty</h5><p>Dopasowane do Ciebie</p></div></div>
+    <div class="col-md-3"><div class="card p-3 animate__animated animate__fadeInUp"><h5>Transport i montaż</h5><p>Kompleksowa obsługa</p></div></div>
+    <div class="col-md-3"><div class="card p-3 animate__animated animate__fadeInUp"><h5>Najlepsi partnerzy</h5><p>Blum, Egger, Kronospan</p></div></div>
   </div>
 </section>
 
@@ -68,50 +87,77 @@
 <section id="sklep" class="container py-5">
   <h2 class="text-center mb-4">Sklep online</h2>
   <div class="row g-4">
-    <div class="col-md-4">
-      <div class="card product-card p-3 text-center">
-        <h5>Płyta laminowana</h5>
-        <p class="text-danger fw-bold">od 199 zł</p>
-        <a href="#" class="btn btn-main">Dodaj do koszyka</a>
-      </div>
+    <div class="col-md-3"><div class="card product-card p-3 text-center"><h5>Płyta laminowana</h5><p class="text-danger fw-bold">od 199 zł</p><a href="#" class="btn btn-main">Dodaj</a></div></div>
+    <div class="col-md-3"><div class="card product-card p-3 text-center"><h5>Zawiasy Blum</h5><p class="text-danger fw-bold">od 29 zł</p><a href="#" class="btn btn-main">Dodaj</a></div></div>
+    <div class="col-md-3"><div class="card product-card p-3 text-center"><h5>Blat kuchenny</h5><p class="text-danger fw-bold">od 399 zł</p><a href="#" class="btn btn-main">Dodaj</a></div></div>
+    <div class="col-md-3"><div class="card product-card p-3 text-center"><h5>Fronty lakierowane</h5><p class="text-danger fw-bold">od 249 zł</p><a href="#" class="btn btn-main">Dodaj</a></div></div>
+  </div>
+</section>
+
+<!-- Liczniki -->
+<section class="bg-light py-5 text-center">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4"><h2 id="count1">0</h2><p>Kuchni w 2024</p></div>
+      <div class="col-md-4"><h2 id="count2">0</h2><p>m² płyt sprzedanych</p></div>
+      <div class="col-md-4"><h2 id="count3">0</h2><p>Zadowolonych klientów</p></div>
     </div>
-    <div class="col-md-4">
-      <div class="card product-card p-3 text-center">
-        <h5>Zawiasy Blum</h5>
-        <p class="text-danger fw-bold">od 29 zł</p>
-        <a href="#" class="btn btn-main">Dodaj do koszyka</a>
-      </div>
+  </div>
+</section>
+
+<!-- Projekty -->
+<section id="projekty" class="container py-5">
+  <h2 class="text-center mb-4">Projekty kuchni ✨</h2>
+  <div id="carouselExample" class="carousel slide">
+    <div class="carousel-inner">
+      <div class="carousel-item active"><img src="https://images.unsplash.com/photo-1598300187397-46c9b3c18e86?auto=format&fit=crop&w=1200&q=80" class="d-block w-100"></div>
+      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1600607687858-8a4d01e4da3f?auto=format&fit=crop&w=1200&q=80" class="d-block w-100"></div>
+      <div class="carousel-item"><img src="https://images.unsplash.com/photo-1615874959474-d609b89ed0d2?auto=format&fit=crop&w=1200&q=80" class="d-block w-100"></div>
     </div>
-    <div class="col-md-4">
-      <div class="card product-card p-3 text-center">
-        <h5>Blat kuchenny</h5>
-        <p class="text-danger fw-bold">od 399 zł</p>
-        <a href="#" class="btn btn-main">Dodaj do koszyka</a>
-      </div>
-    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span></button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next"><span class="carousel-control-next-icon"></span></button>
   </div>
 </section>
 
 <!-- Opinie -->
-<section id="opinie" class="container py-5">
-  <h2 class="text-center mb-4">Opinie klientów</h2>
-  <div class="row g-4">
-    <div class="col-md-4"><div class="card p-3">„Kuchnia idealna, profesjonalna obsługa!” – Anna K.</div></div>
-    <div class="col-md-4"><div class="card p-3">„Docinki CNC perfekcyjne. Polecam.” – Marek P.</div></div>
-    <div class="col-md-4"><div class="card p-3">„Świetny wybór płyt i akcesoriów.” – Tomasz Z.</div></div>
+<section id="opinie" class="container py-5 text-center">
+  <h2 class="mb-4">Opinie klientów</h2>
+  <div id="carouselOpinie" class="carousel slide">
+    <div class="carousel-inner">
+      <div class="carousel-item active"><p>😊 „Kuchnia idealna, profesjonalna obsługa!” – Anna K.</p></div>
+      <div class="carousel-item"><p>👍 „Docinki CNC perfekcyjne. Polecam.” – Marek P.</p></div>
+      <div class="carousel-item"><p>⭐ „Świetny wybór płyt i akcesoriów.” – Tomasz Z.</p></div>
+      <div class="carousel-item"><p>😍 „Projekt kuchni przerósł moje oczekiwania!” – Katarzyna W.</p></div>
+    </div>
   </div>
 </section>
 
-<!-- CTA Kontakt -->
+<!-- FAQ -->
+<section id="faq" class="container py-5">
+  <h2 class="text-center mb-4">FAQ</h2>
+  <div class="accordion" id="accordionFAQ">
+    <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#q1">Czy wykonujecie pomiar?</button></h2><div id="q1" class="accordion-collapse collapse"><div class="accordion-body">Tak, przyjeżdżamy do klienta i wykonujemy dokładny pomiar.</div></div></div>
+    <div class="accordion-item"><h2 class="accordion-header"><button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#q2">Ile trwa realizacja?</button></h2><div id="q2" class="accordion-collapse collapse"><div class="accordion-body">Średnio 4–6 tygodni w zależności od projektu.</div></div></div>
+  </div>
+</section>
+
+<!-- Kontakt -->
 <section id="kontakt" class="cta">
-  <h2>Zadzwoń i zaprojektuj swoją wymarzoną kuchnię!</h2>
+  <h2>Zadzwoń i zaprojektuj swoją kuchnię!</h2>
   <p><strong>📞 123-456-789</strong></p>
   <a href="tel:123456789" class="btn btn-light btn-lg">Zadzwoń teraz</a>
 </section>
 
+<!-- Partnerzy -->
+<section class="container py-5 text-center">
+  <h2 class="mb-4">Partnerzy</h2>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/47/Blum_logo.svg" class="partner-logo mx-3" width="100">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/f/f5/Egger_logo.svg" class="partner-logo mx-3" width="100">
+</section>
+
 <!-- Footer -->
 <footer>
-  <p>© 2025 Wior-Płyt - Meble na wymiar i płyty meblowe</p>
+  <p>© 2025 Wior-Płyt</p>
 </footer>
 
 <!-- Chatbot -->
@@ -125,35 +171,33 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.12/typed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.0.7/countUp.min.js"></script>
 <script>
+  // Typed.js
+  new Typed('#typed-text', {
+    strings: ["Meble na wymiar", "Płyty meblowe", "Docinki CNC", "Akcesoria kuchenne"],
+    typeSpeed: 50, backSpeed: 30, loop: true
+  });
+  // CountUp.js
+  const count1 = new CountUp('count1', 200); count1.start();
+  const count2 = new CountUp('count2', 12000); count2.start();
+  const count3 = new CountUp('count3', 500); count3.start();
+  // Dark mode
+  function toggleDark(){ document.body.classList.toggle('dark-mode'); }
+  // Chatbot
   const chatbox = document.getElementById('chatbox');
   const messages = document.getElementById('messages');
   const toggle = document.querySelector('.chat-toggle');
-
-  toggle.onclick = () => {
-    chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex';
-    chatbox.style.flexDirection = "column";
-  };
-
+  toggle.onclick = () => { chatbox.style.display = chatbox.style.display === 'flex' ? 'none' : 'flex'; chatbox.style.flexDirection="column"; };
   function sendMessage() {
     const input = document.getElementById('userInput');
     if (!input.value.trim()) return;
-    const msg = document.createElement('div');
-    msg.textContent = "Ty: " + input.value;
-    messages.appendChild(msg);
-
-    // Symulacja odpowiedzi AI
-    setTimeout(() => {
-      const reply = document.createElement('div');
-      reply.textContent = "AI: Dziękujemy! Chętnie pomożemy zaprojektować kuchnię marzeń.";
-      messages.appendChild(reply);
-      messages.scrollTop = messages.scrollHeight;
-    }, 800);
-
+    const msg = document.createElement('div'); msg.textContent = "Ty: " + input.value; messages.appendChild(msg);
+    setTimeout(() => { const reply = document.createElement('div'); reply.textContent = "AI: Dziękujemy! Skontaktujemy się z Tobą."; messages.appendChild(reply); messages.scrollTop = messages.scrollHeight; }, 800);
     input.value = '';
   }
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
